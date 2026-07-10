@@ -1,6 +1,0 @@
-# Automatic HTTPS via Let's Encrypt for $DOMAIN (set in ./.env).
-# Caddy obtains + renews the certificate once DNS points at this server.
-{$DOMAIN} {
-	encode zstd gzip
-	reverse_proxy app:3000
-}

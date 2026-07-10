@@ -1,7 +1,0 @@
-module.exports=[22734,(a,b,c)=>{b.exports=a.x("fs",()=>require("fs"))},54799,(a,b,c)=>{b.exports=a.x("crypto",()=>require("crypto"))},23862,a=>a.a(async(b,c)=>{try{let b=await a.y("pg-587764f78a6c7a9c");a.n(b),c()}catch(a){c(a)}},!0),67172,a=>a.a(async(b,c)=>{try{var d=a.i(85545),e=a.i(68138),f=b([d,e]);async function g({params:a}){let{username:b}=await a,c=(0,e.getDb)(),d=await c.get(`
-    SELECT username, team, driver, bio, karma
-    FROM users
-    WHERE username = ?
-  `,[b]);if(!d)return{title:"Профиль не найден",robots:{index:!1,follow:!0}};let f=`${d.username} — профиль PADDOCK`,h=d.team?` \xb7 ${d.team}`:"",i=d.driver?` \xb7 ${d.driver}`:"",j=d.bio?.trim()||`Профиль ${d.username} в PADDOCK: ${d.karma} кармы${h}${i}.`;return{title:f,description:j,alternates:{canonical:`/user/${b}`},openGraph:{title:f,description:j,type:"profile",images:["/paddock-og.svg"]},twitter:{card:"summary_large_image",title:f,description:j,images:["/paddock-og.svg"]}}}[d,e]=f.then?(await f)():f,a.s(["default",0,function({children:a}){return a},"generateMetadata",0,g]),c()}catch(a){c(a)}},!1),59866,a=>{a.n(a.i(67172))},93015,a=>{a.v(b=>Promise.all(["server/chunks/ssr/src_lib_achievements_ts_1yujird._.js"].map(b=>a.l(b))).then(()=>b(17960)))}];
-
-//# sourceMappingURL=%5Broot-of-the-server%5D__1dwlo81._.js.map

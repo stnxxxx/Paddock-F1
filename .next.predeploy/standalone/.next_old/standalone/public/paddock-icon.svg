@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PADDOCK">
-  <rect width="512" height="512" rx="112" fill="#0a0a0f"/>
-  <path d="M96 334h320v50H96z" fill="#e10600"/>
-  <path d="M96 242h220c64 0 100-34 100-86 0-54-39-86-104-86H96v264h70v-84h150v-8H166V126h143c25 0 39 12 39 31 0 18-14 31-39 31H206v54z" fill="#f5f5f7"/>
-  <path d="M96 384h320v36H96z" fill="#f5f5f7" opacity=".18"/>
-</svg>

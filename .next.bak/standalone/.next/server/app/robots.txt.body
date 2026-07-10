@@ -1,8 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /settings
-Disallow: /notifications
-
-Sitemap: https://paddockf1.ru/sitemap.xml

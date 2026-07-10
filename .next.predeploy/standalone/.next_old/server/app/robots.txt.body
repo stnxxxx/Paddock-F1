@@ -1,8 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /settings
-Disallow: /notifications
-
-Sitemap: http://185.240.103.224:3000/sitemap.xml

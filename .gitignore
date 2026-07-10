@@ -52,3 +52,18 @@ login_result.txt
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# junk dirs
+.next_old/
+.next.bak/
+.next.predeploy/
+F1News/
+.claude/
+start-dev.bat
+*.predeploy-*
+*.preopt*
+*.pre-*
+*.opt*
+*.tsbuildinfo
+.env.local
+.env.production
