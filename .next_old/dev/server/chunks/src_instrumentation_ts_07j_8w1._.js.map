@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/20nek/Documents/F1News/src/instrumentation.ts"],"sourcesContent":["// Runs once when the server process boots. We use it to start the background\n// F1 data parser so standings/calendar/live data refresh on a timer without\n// waiting for a visitor to hit the page.\nexport async function register() {\n  if (process.env.NEXT_RUNTIME === \"nodejs\") {\n    const { initDb } = await import(\"@/db\")\n    await initDb()\n    const { startF1Scheduler } = await import(\"@/lib/f1/scheduler\")\n    startF1Scheduler()\n  }\n}\n"],"names":["register","initDb","startF1Scheduler"],"mappings":"AAAA,6EAA6E;AAC7E,4EAA4E;AAC5E,yCAAyC;;;;;AAClC,eAAeA;IACpB,wCAA2C;QACzC,MAAM,EAAEC,MAAM,EAAE,GAAG;QACnB,MAAMA;QACN,MAAM,EAAEC,gBAAgB,EAAE,GAAG;QAC7BA;IACF;AACF"}}]
+}

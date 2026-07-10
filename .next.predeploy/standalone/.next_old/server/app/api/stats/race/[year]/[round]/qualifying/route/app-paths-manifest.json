@@ -1,0 +1,3 @@
+{
+  "/api/stats/race/[year]/[round]/qualifying/route": "app/api/stats/race/[year]/[round]/qualifying/route.js"
+}

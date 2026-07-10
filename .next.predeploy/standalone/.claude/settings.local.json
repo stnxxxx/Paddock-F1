@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(JWT_SECRET=build-time-secret-1234567890 npm run build)"
+    ]
+  }
+}

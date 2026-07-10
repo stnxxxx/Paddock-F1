@@ -1,0 +1,3 @@
+{
+  "/api/communities/[slug]/route": "app/api/communities/[slug]/route.js"
+}

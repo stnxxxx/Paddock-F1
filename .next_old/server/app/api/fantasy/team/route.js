@@ -1,0 +1,10 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/fantasy/team/route.js")
+R.c("server/chunks/[root-of-the-server]__1i7okgy._.js")
+R.c("server/chunks/src_lib_1wch8_g._.js")
+R.c("server/chunks/_1ygqd5e._.js")
+R.c("server/chunks/[root-of-the-server]__1y_g68p._.js")
+R.c("server/chunks/_0zzkued._.js")
+R.c("server/chunks/node_modules_next_dist_13kw1hb._.js")
+R.c("server/chunks/_next-internal_server_app_api_fantasy_team_route_actions_0ucb1aw.js")
+R.m(75262)
+module.exports=R.m(75262).exports
