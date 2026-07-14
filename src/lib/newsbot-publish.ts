@@ -180,10 +180,6 @@ async function writePublication(
     if (options.mode === "update") {
       throw new NewsbotRequestError(404, "NewsBot publication does not exist")
     }
-    if (input.contentVersion !== 1) {
-      throw new NewsbotRequestError(422, "NewsBot publication must start at contentVersion 1")
-    }
-
     const postId = uuid()
     await tx.run(
       "INSERT INTO posts (id, user_id, title, content, tag, image, community_author_id, anonymous) VALUES (?, ?, ?, ?, ?, ?, ?, 0)",
