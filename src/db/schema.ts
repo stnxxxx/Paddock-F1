@@ -567,7 +567,7 @@ export async function migratePgSchema(): Promise<void> {
       );
 
       CREATE TABLE IF NOT EXISTS newsbot_idempotency_keys (
-        key TEXT PRIMARY KEY,
+        idempotency_key TEXT PRIMARY KEY,
         request_hash TEXT NOT NULL,
         status_code INTEGER NOT NULL DEFAULT 0,
         response_json TEXT NOT NULL DEFAULT '',
