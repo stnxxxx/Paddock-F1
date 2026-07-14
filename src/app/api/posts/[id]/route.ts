@@ -102,6 +102,15 @@ export async function GET(
 
   const commentsParams: unknown[] = auth ? [auth.userId, id] : [id]
   const comments = await db.all(commentsSql, commentsParams)
+  const sources = await db.all<{
+    publisher: string
+    url: string
+    published_at: string | null
+    kind: string
+  }>(
+    "SELECT publisher, url, published_at, kind FROM newsbot_post_sources WHERE post_id = ? ORDER BY position ASC",
+    [id]
+  )
 
-  return apiResponse({ post: inflateTags(post), comments })
+  return apiResponse({ post: { ...inflateTags(post), sources }, comments })
 }
