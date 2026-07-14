@@ -13,7 +13,7 @@ const SOURCE_SCHEMA = z.object({
 }).strict()
 
 const POST_SCHEMA = z.object({
-  externalId: z.string().trim().min(8).max(128).regex(/^[A-Za-z0-9:._-]+$/),
+  externalId: z.string().trim().min(8).max(128).regex(/^[A-Za-z0-9:._/-]+$/),
   contentVersion: z.number().int().min(1).max(1_000_000),
   title: z.string().trim().min(1).max(180),
   content: z.string().trim().min(1).max(10_000),
