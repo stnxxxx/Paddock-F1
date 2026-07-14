@@ -75,10 +75,7 @@ export function parseNewsbotPost(payload: unknown): NewsbotPostInput {
     throw new NewsbotRequestError(422, "Invalid NewsBot post payload")
   }
 
-  const metadataText = JSON.stringify(parsed.data.metadata)
-  if (metadataText.length > 8_000) {
-    throw new NewsbotRequestError(422, "NewsBot metadata is too large")
-  }
+  serializeMetadata(parsed.data.metadata)
 
   return {
     ...parsed.data,
@@ -173,7 +170,7 @@ async function writePublication(
     throw new NewsbotRequestError(422, "NewsBot card must be uploaded before publishing")
   }
 
-  const metadataText = JSON.stringify(input.metadata)
+  const metadataText = serializeMetadata(input.metadata)
   const current = await tx.get<PublicationRow>(
     "SELECT post_id, content_version, payload_sha256, card_url FROM newsbot_publications WHERE external_id = ? FOR UPDATE",
     [input.externalId]
@@ -275,6 +272,14 @@ async function replaceRelations(
       [uuid(), postId, position, source.publisher, source.url, source.published_at || null, source.kind]
     )
   }
+}
+
+function serializeMetadata(metadata: Record<string, unknown>) {
+  const serialized = JSON.stringify(metadata)
+  if (typeof serialized !== "string" || serialized.length > 8_000) {
+    throw new NewsbotRequestError(422, "NewsBot metadata is too large")
+  }
+  return serialized
 }
 
 function resolveCommunityId(input: NewsbotPostInput) {
