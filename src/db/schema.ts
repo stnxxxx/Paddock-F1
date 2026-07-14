@@ -520,6 +520,60 @@ export async function migratePgSchema(): Promise<void> {
         payload TEXT,
         PRIMARY KEY (session_key, driver_number, sampled_at)
       );
+
+      -- NewsBot's signed publisher state is intentionally separate from the
+      -- community schema so normal user posts remain unchanged.
+      CREATE TABLE IF NOT EXISTS newsbot_request_nonces (
+        nonce TEXT PRIMARY KEY,
+        key_id TEXT NOT NULL,
+        body_sha256 TEXT NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS newsbot_media (
+        sha256 TEXT PRIMARY KEY,
+        path TEXT UNIQUE NOT NULL,
+        content_type TEXT NOT NULL,
+        byte_length INTEGER NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS newsbot_publications (
+        external_id TEXT PRIMARY KEY,
+        post_id TEXT UNIQUE NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+        content_version INTEGER NOT NULL,
+        payload_sha256 TEXT NOT NULL,
+        classification TEXT NOT NULL,
+        category TEXT NOT NULL,
+        card_url TEXT NOT NULL REFERENCES newsbot_media(path),
+        publish_at TEXT,
+        correction_note TEXT,
+        metadata TEXT NOT NULL DEFAULT '{}',
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS newsbot_post_sources (
+        id TEXT PRIMARY KEY,
+        post_id TEXT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+        position INTEGER NOT NULL DEFAULT 0,
+        publisher TEXT NOT NULL,
+        url TEXT NOT NULL,
+        published_at TEXT,
+        kind TEXT NOT NULL DEFAULT 'web',
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(post_id, url)
+      );
+
+      CREATE TABLE IF NOT EXISTS newsbot_idempotency_keys (
+        key TEXT PRIMARY KEY,
+        request_hash TEXT NOT NULL,
+        status_code INTEGER NOT NULL DEFAULT 0,
+        response_json TEXT NOT NULL DEFAULT '',
+        expires_at TIMESTAMPTZ NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
     `)
 
     // Indexes
@@ -562,6 +616,10 @@ export async function migratePgSchema(): Promise<void> {
       CREATE INDEX IF NOT EXISTS idx_fantasy_lineups_round ON fantasy_lineups(round_id);
       CREATE INDEX IF NOT EXISTS idx_fantasy_asset_scores_round ON fantasy_asset_scores(round_id);
       CREATE INDEX IF NOT EXISTS idx_fantasy_league_members_user ON fantasy_league_members(user_id);
+      CREATE INDEX IF NOT EXISTS idx_newsbot_nonces_expires ON newsbot_request_nonces(expires_at);
+      CREATE INDEX IF NOT EXISTS idx_newsbot_publications_post ON newsbot_publications(post_id);
+      CREATE INDEX IF NOT EXISTS idx_newsbot_sources_post ON newsbot_post_sources(post_id, position);
+      CREATE INDEX IF NOT EXISTS idx_newsbot_idempotency_expires ON newsbot_idempotency_keys(expires_at);
     `)
 
     // Full-text search via tsvector (replaces SQLite FTS5)
