@@ -36,7 +36,7 @@ export async function PATCH(
       payloadHash: signed.bodyHash,
       idempotencyKey: requireNewsbotIdempotencyKey(signed),
     })
-    return newsbotJson(response, response.alreadyExisted ? 200 : 200)
+    return newsbotJson(response)
   } catch (error) {
     return newsbotError(error)
   }
