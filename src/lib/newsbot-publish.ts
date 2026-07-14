@@ -114,7 +114,7 @@ async function getIdempotentResponse(
   payloadHash: string
 ): Promise<NewsbotPublicationResponse | null> {
   const claimed = await tx.run(
-    "INSERT INTO newsbot_idempotency_keys (idempotency_key, request_hash, status_code, response_json, expires_at) VALUES (?, ?, 0, '', NOW() + INTERVAL '7 days') ON CONFLICT (key) DO NOTHING",
+    "INSERT INTO newsbot_idempotency_keys (idempotency_key, request_hash, status_code, response_json, expires_at) VALUES (?, ?, 0, '', NOW() + INTERVAL '7 days') ON CONFLICT (idempotency_key) DO NOTHING",
     [key, payloadHash]
   )
   if (claimed.rowCount === 1) return null
