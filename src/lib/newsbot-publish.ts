@@ -104,7 +104,7 @@ export async function publishNewsbotPost(
 
     const response = await writePublication(tx, input, options)
     await tx.run(
-      "UPDATE newsbot_idempotency_keys SET status_code = ?, response_json = ? WHERE key = ?",
+      "UPDATE newsbot_idempotency_keys SET status_code = ?, response_json = ? WHERE idempotency_key = ?",
       [200, JSON.stringify(response), options.idempotencyKey]
     )
     return response
@@ -117,13 +117,13 @@ async function getIdempotentResponse(
   payloadHash: string
 ): Promise<NewsbotPublicationResponse | null> {
   const claimed = await tx.run(
-    "INSERT INTO newsbot_idempotency_keys (key, request_hash, status_code, response_json, expires_at) VALUES (?, ?, 0, '', NOW() + INTERVAL '7 days') ON CONFLICT (key) DO NOTHING",
+    "INSERT INTO newsbot_idempotency_keys (idempotency_key, request_hash, status_code, response_json, expires_at) VALUES (?, ?, 0, '', NOW() + INTERVAL '7 days') ON CONFLICT (key) DO NOTHING",
     [key, payloadHash]
   )
   if (claimed.rowCount === 1) return null
 
   const stored = await tx.get<StoredIdempotency>(
-    "SELECT request_hash, status_code, response_json FROM newsbot_idempotency_keys WHERE key = ? FOR UPDATE",
+    "SELECT request_hash, status_code, response_json FROM newsbot_idempotency_keys WHERE idempotency_key = ? FOR UPDATE",
     [key]
   )
   if (!stored || stored.request_hash !== payloadHash) {
