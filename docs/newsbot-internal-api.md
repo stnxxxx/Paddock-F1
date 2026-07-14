@@ -49,8 +49,8 @@ It never fetches a URL. Cards are size-limited, type-sniffed, content-hashed,
 and stored in the existing uploads volume.
 
 Posts require a card URL returned by the media route, at least one HTTPS source,
-an `externalId`, and a monotonic `contentVersion`. The create route creates
-only version 1; later editorial corrections use PATCH with a higher version.
+an `externalId`, and a positive `contentVersion`. The first create may already
+contain an AI/editorial revision; later corrections use PATCH with a higher version.
 Posts are mapped only to the fixed PADDOCK NewsBot hubs and retain their source
 links for public attribution.
 
