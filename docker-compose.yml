@@ -36,6 +36,10 @@ services:
       GMAIL_USER: ${GMAIL_USER:-}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
       GMAIL_FROM: ${GMAIL_FROM:-}
+      # Signed PC-to-VPS NewsBot integration. Disabled until explicitly enabled.
+      NEWSBOT_API_ENABLED: ${NEWSBOT_API_ENABLED:-0}
+      NEWSBOT_HMAC_KEY_ID: ${NEWSBOT_HMAC_KEY_ID:-local-newsbot}
+      NEWSBOT_HMAC_SECRET: ${NEWSBOT_HMAC_SECRET:-}
     volumes:
       - uploads:/app/public/uploads
     expose:
