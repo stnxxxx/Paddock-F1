@@ -195,6 +195,26 @@ export default function PostPage() {
               </div>
             )}
 
+            {post.sources && post.sources.length > 0 && (
+              <section aria-label="Источники" className="mb-4 rounded-md border border-[--border-default] bg-[--bg-elevated] px-3 py-2.5">
+                <h2 className="mb-1.5 text-xs font-semibold text-[--text-primary]">Источники</h2>
+                <ul className="space-y-1 text-xs">
+                  {post.sources.map((source) => (
+                    <li key={source.url}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer noopener nofollow"
+                        className="text-[--accent] hover:underline"
+                      >
+                        {source.publisher}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             {post.image && (
               <div className="mb-4 overflow-hidden rounded-md border border-[--border-default] bg-black/5">
                 <img src={post.image} alt={post.title} className="max-h-[640px] w-full rounded-md object-contain" />

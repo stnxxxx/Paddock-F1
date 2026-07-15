@@ -54,6 +54,13 @@ export interface ApiUserProfile {
   is_muted?: number
 }
 
+export interface ApiPostSource {
+  publisher: string
+  url: string
+  published_at: string | null
+  kind: string
+}
+
 export interface ApiPost {
   id: string
   user_id: string
@@ -62,6 +69,7 @@ export interface ApiPost {
   tag: string | null
   tags?: string[]
   image?: string | null
+  sources?: ApiPostSource[]
   created_at: string
   updated_at: string
   username: string
